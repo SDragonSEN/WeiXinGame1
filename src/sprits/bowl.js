@@ -12,12 +12,13 @@ const PLAYER_RADIUM = 20
 
 export default class Bowl {
   constructor() {
-    // 玩家默认处于屏幕底部居中位置
+
     this.x = screenWidth / 2
     this.y = screenHeight / 2
     this.xs = 2
     this.ys = 2
   }
+
   drawToCanvas(ctx) {
     ctx.fillStyle = 'red'
     if (this.x - PLAYER_RADIUM < 0)
