@@ -7,6 +7,7 @@ const DISTANSE = 35
 const SCREEN_WIDTH = window.innerWidth
 
 export default class Snake {
+  //目前body{0}即是蛇头，后续有必要的话可以单独提出来
   constructor(pool, initX, initY) {
     //速度
     this.speed = 2
@@ -32,23 +33,22 @@ export default class Snake {
     this.body[0].y -= this.speed
   }
   moveBody(){    
-    for (var i = 1; i < this.body.length; i++) {
+    for (var i = this.body.length - 1; i > 0; i--) {
       this.body[i].move(this.body[i - 1])
     }
   }
+  /* 这里只是前进方向的移动 */
   move(){
-    this.moveHeader()
     this.moveBody()
+    this.moveHeader()    
   }
+  /* Y轴上的偏移 */
   offsetY(oY){
     for (var i = 0; i < this.body.length; i++) {
       this.body[i].y += oY
     }
   }
   knickRec(){
-    //todo
-  }
-  knickWall() {
     //todo
   }
   eat(num){
@@ -59,14 +59,16 @@ export default class Snake {
     canvas.addEventListener('touchstart', ((e) => {
       e.preventDefault()
       this.touchedX = e.touches[0].clientX
-      console.log("touchstart", this.touchedX)
     }).bind(this))
 
     //手指移动 
     canvas.addEventListener('touchmove', ((e) => {
       e.preventDefault()
+      //这里需要限定速度，即dx最大值，不然横向移动过于迅速，会降低游戏性
+      //最后根据游戏效果再来微调, to do
 
       var dX = e.touches[0].clientX - this.touchedX + this.body[0].x
+
       if (dX < RADIUM){
         dX = RADIUM
       } else if (dX > SCREEN_WIDTH - RADIUM){
@@ -74,6 +76,8 @@ export default class Snake {
       }
       this.body[0].x = dX
       this.touchedX = e.touches[0].clientX
+      //碰撞检测，to do
+
     }).bind(this))
   }
 }

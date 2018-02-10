@@ -1,5 +1,5 @@
 const RADIUM = 15
-const DISTANSE = 35
+const DISTANSE = 30
 export default class Body {
   constructor() {
     this.x = 0;
